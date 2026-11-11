@@ -1,0 +1,61 @@
+{
+  "name": "wan30",
+  "displayName": "Wan30 MCP and CLI",
+  "version": "0.1.0",
+  "publisher": "NotUsingGithub",
+  "description": "Registers the official local Wan30 MCP server and can show account, model, and credit estimates. Does not generate videos.",
+  "license": "MIT",
+  "homepage": "https://wan30.video/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NotUsingGithub/wan30-mcp.git",
+    "directory": "packages/vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/NotUsingGithub/wan30-mcp/issues"
+  },
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": ["Other"],
+  "keywords": ["wan30", "mcp"],
+  "main": "./src/extension.js",
+  "contributes": {
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "wan30",
+        "label": "Wan30"
+      }
+    ],
+    "commands": [
+      {
+        "command": "wan30.signIn",
+        "title": "Wan30: Sign In with CLI"
+      },
+      {
+        "command": "wan30.account",
+        "title": "Wan30: Show Account"
+      },
+      {
+        "command": "wan30.models",
+        "title": "Wan30: List Models"
+      },
+      {
+        "command": "wan30.estimate",
+        "title": "Wan30: Estimate Credits"
+      },
+      {
+        "command": "wan30.addWorkspaceConfig",
+        "title": "Wan30: Add Workspace MCP Configuration"
+      },
+      {
+        "command": "wan30.openDocumentation",
+        "title": "Wan30: Open Documentation"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "package": "npx --yes @vscode/vsce package --no-dependencies"
+  }
+}
