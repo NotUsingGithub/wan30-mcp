@@ -1,0 +1,9 @@
+{
+  "name": "wan30-video-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Obsidian plugin that estimates and creates Wan30 videos through the wan30.video MCP endpoint.",
+  "license": "MIT",
+  "author": "Wan30"
+}
