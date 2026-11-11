@@ -1,0 +1,10 @@
+{
+  "id": "wan30-video-generator",
+  "name": "Wan30 Video",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Estimate and create Wan30 videos in the active note. Generation spends purchased wan30.video credits and stays off until you confirm.",
+  "author": "Wan30",
+  "authorUrl": "https://wan30.video",
+  "isDesktopOnly": false
+}

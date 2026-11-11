@@ -1,0 +1,16 @@
+.wan30-prompt {
+  width: 100%;
+  min-height: 88px;
+}
+
+.wan30-result {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 360px;
+  overflow: auto;
+}
+
+.wan30-note {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
