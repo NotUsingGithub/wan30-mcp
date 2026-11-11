@@ -413,6 +413,13 @@ check(inputSchema.properties.token.isSecret === true, 'secret token');
 check(inputSchema.properties.confirmSpend.default === false, 'confirm defaults off');
 check(outputSchema.properties.results.template === '{{links.apiDefaultDatasetUrl}}/items', 'dataset output');
 check(pkg.dependencies.apify === '3.7.2', 'pinned apify sdk');
+const dockerfile = readFileSync(resolve(root, 'Dockerfile'), 'utf8');
+check(dockerfile.includes('apify/actor-node:22-slim'), 'node 22 slim image');
+check(dockerfile.includes('npm install --omit=dev --omit=optional'), 'npm 10 install flags');
+check(!dockerfile.includes('--only=prod'), 'deprecated npm production flag is absent');
+const readme = readFileSync(resolve(root, 'README.md'), 'utf8');
+check(readme.includes('https://github.com/NotUsingGithub/wan27-apify-actor'), 'wan27 actor reference');
+check(readme.includes('pricingModel: FREE'), 'free pricing model is named');
 check(source.includes("require('apify')") && !source.startsWith("const { Actor }"), 'sdk loads only when started');
 
 console.log(`wan30 apify tests passed (${assertions} assertions)`);
