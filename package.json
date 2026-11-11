@@ -1,0 +1,45 @@
+{
+  "name": "@wan30/cli",
+  "version": "0.1.0",
+  "mcpName": "io.github.NotUsingGithub/wan30-mcp",
+  "description": "Generate Wan 3.0 videos with your wan30.video account from the terminal or any MCP client",
+  "type": "module",
+  "homepage": "https://wan30.video/cli/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NotUsingGithub/wan30-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NotUsingGithub/wan30-mcp/issues"
+  },
+  "keywords": [
+    "wan30",
+    "wan3.0",
+    "wan-3.0",
+    "mcp",
+    "model-context-protocol",
+    "ai-video",
+    "text-to-video",
+    "image-to-video",
+    "cli"
+  ],
+  "license": "MIT",
+  "bin": {
+    "wan30": "./src/cli.mjs"
+  },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=22"
+  },
+  "os": ["darwin", "linux"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "prepublishOnly": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1"
+  }
+}
