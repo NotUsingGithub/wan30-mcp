@@ -1,0 +1,177 @@
+# Manual PyPI release for wan30, then langchain-wan30.
+# Trusted publishing only: this file has no passwords, tokens, or TWINE_* secrets.
+# It does not run on push, pull request, or tag.
+name: publish-python
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Type publish to upload wan30, then langchain-wan30, to PyPI."
+        required: true
+        type: string
+
+# Restrict the workflow token. Publish jobs replace this with id-token only.
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-python
+  cancel-in-progress: false
+
+jobs:
+  confirm:
+    name: confirm
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require the publish confirmation
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          set -euo pipefail
+          if [ "$CONFIRM" != "publish" ]; then
+            echo "Refusing to continue. Re-run with the confirm input set to publish."
+            exit 1
+          fi
+
+  test:
+    name: test
+    needs: confirm
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Test wan30
+        env:
+          PYTHONPATH: packages/python/src
+        run: python -m unittest discover -s packages/python/tests -v
+
+      - name: Install the LangChain test dependency
+        run: python -m pip install "langchain-core>=0.3,<2"
+
+      - name: Test langchain-wan30
+        run: python -m unittest discover -s packages/langchain-python/tests -v
+
+  build:
+    name: build
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: python -m pip install "build==1.6.1" "twine==7.0.0"
+
+      - name: Build wan30
+        run: python -m build packages/python
+
+      - name: Build langchain-wan30
+        run: python -m build packages/langchain-python
+
+      - name: Require one wheel and one sdist, then run twine check
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          wan30_wheels=(packages/python/dist/*.whl)
+          wan30_sdists=(packages/python/dist/*.tar.gz)
+          langchain_wheels=(packages/langchain-python/dist/*.whl)
+          langchain_sdists=(packages/langchain-python/dist/*.tar.gz)
+          test "${#wan30_wheels[@]}" -eq 1
+          test "${#wan30_sdists[@]}" -eq 1
+          test "${#langchain_wheels[@]}" -eq 1
+          test "${#langchain_sdists[@]}" -eq 1
+          python -m twine check \
+            "${wan30_wheels[@]}" \
+            "${wan30_sdists[@]}" \
+            "${langchain_wheels[@]}" \
+            "${langchain_sdists[@]}"
+
+      - name: Import the built wan30 wheel
+        run: |
+          set -euo pipefail
+          python -m pip install --no-deps packages/python/dist/*.whl
+          python -c 'import wan30; assert wan30.__version__ == "0.1.0"'
+
+      - name: Upload the wan30 distributions
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: wan30-dist
+          path: packages/python/dist/
+          if-no-files-found: error
+
+      - name: Upload the langchain-wan30 distributions
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: langchain-wan30-dist
+          path: packages/langchain-python/dist/
+          if-no-files-found: error
+
+  publish-wan30:
+    name: publish wan30
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: pypi
+      url: https://pypi.org/p/wan30
+    permissions:
+      id-token: write
+    steps:
+      - name: Download the wan30 distributions
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: wan30-dist
+          path: dist
+
+      - name: Publish wan30 to PyPI
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: dist
+          verify-metadata: true
+          skip-existing: true
+          print-hash: true
+
+  publish-langchain-wan30:
+    name: publish langchain-wan30
+    needs: publish-wan30
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: pypi
+      url: https://pypi.org/p/langchain-wan30
+    permissions:
+      id-token: write
+    steps:
+      - name: Download the langchain-wan30 distributions
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: langchain-wan30-dist
+          path: dist
+
+      - name: Publish langchain-wan30 to PyPI
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: dist
+          verify-metadata: true
+          skip-existing: true
+          print-hash: true
