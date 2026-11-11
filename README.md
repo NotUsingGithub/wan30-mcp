@@ -93,6 +93,47 @@ needed afterwards.
 Read the account status and estimate the cost before generating. Video
 generation spends your website credits.
 
+## JavaScript Registry
+
+`@notusinggithub/wan30` exports this repository's `WanClient` and the same
+seven MCP tools for JSR. The npm command remains `@wan30/cli`. Node.js 22 or
+newer. Generation uses your wan30.video account. Purchased credits are
+required. Sign-up, check-in, and gift credits alone do not qualify.
+
+After 0.1.0 is published:
+
+```sh
+npx jsr add @notusinggithub/wan30
+```
+
+```js
+import { WanClient, TOOLS } from "@notusinggithub/wan30";
+
+const wan = new WanClient({
+  getToken: async () => {
+    const token = process.env.WAN30_ACCESS_TOKEN;
+    if (!token) throw new Error("WAN30_ACCESS_TOKEN is required.");
+    return token;
+  },
+});
+console.log(await wan.account());
+console.log(TOOLS.map((tool) => tool.name));
+```
+
+The module does not read the CLI credential store or open a browser. Sign in
+with `wan30 auth login`, or pass an existing access token from the server
+environment. Do not put tokens in browser code. `account()` and `estimate()`
+do not create a video. `generate()` spends purchased credits.
+
+Check the package without uploading it:
+
+```sh
+npx jsr publish --dry-run
+```
+
+Publishing sends the package to JSR and asks the `@notusinggithub` scope owner
+to approve it in a browser.
+
 ## Documentation and support
 
 - [Wan30 website](https://wan30.video/)
