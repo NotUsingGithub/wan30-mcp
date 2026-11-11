@@ -1,0 +1,23 @@
+[project]
+name = "wan30"
+version = "0.1.0"
+description = "ComfyUI nodes for a wan30.video account. Purchased credits are required for generation."
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = ["wan30>=0.1.0,<0.2"]
+authors = [
+  { name = "Wan30" },
+  { name = "NotUsingGithub" },
+]
+classifiers = [
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Repository = "https://github.com/NotUsingGithub/wan30-mcp"
+Documentation = "https://wan30.video/mcp/guide/"
+"Bug Tracker" = "https://github.com/NotUsingGithub/wan30-mcp/issues"
+
+[tool.comfy]
+PublisherId = "notusinggithub"
+DisplayName = "Wan30"
