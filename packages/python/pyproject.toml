@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wan30"
+version = "0.1.0"
+description = "Python client for a wan30.video account. Purchased credits are required."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+  { name = "Wan30" },
+  { name = "NotUsingGithub" },
+]
+keywords = [
+  "wan30",
+  "wan3.0",
+  "ai-video",
+  "text-to-video",
+  "image-to-video",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Multimedia :: Video",
+]
+
+[project.urls]
+Homepage = "https://wan30.video/"
+Documentation = "https://wan30.video/mcp/guide/"
+Repository = "https://github.com/NotUsingGithub/wan30-mcp"
+Issues = "https://github.com/NotUsingGithub/wan30-mcp/issues"
+Pricing = "https://wan30.video/pricing/"
+
+[tool.setuptools.packages.find]
+where = ["src"]
