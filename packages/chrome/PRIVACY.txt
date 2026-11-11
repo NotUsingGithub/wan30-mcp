@@ -1,0 +1,13 @@
+Wan30 MCP Setup privacy disclosure
+
+This extension does not handle user data.
+
+It does not collect, store, transmit, or sell personal information, browsing history, page content, authentication information, or access tokens. It does not use analytics, remote code, or host permissions. It does not request Chrome permissions.
+
+The platform choice and service-origin text exist only in the open extension page. They are used to build setup text on that page. A copy button places the visible text on the clipboard. Closing the page discards what was typed. The extension does not write it to disk and does not send it to Wan30, NotUsingGithub, Google, or any other party.
+
+Links to wan30.video and https://github.com/NotUsingGithub/wan30-mcp open in a new browser tab only after a click. The extension itself does not call those sites.
+
+Public author: Wan30 / NotUsingGithub.
+
+This text is not a published privacy-policy URL. Host it yourself only if the Chrome Web Store dashboard requires a URL.

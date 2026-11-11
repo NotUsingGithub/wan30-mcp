@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Wan30 MCP Setup</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header>
+      <h1>Wan30 MCP Setup</h1>
+      <p id="lede">Copy the official Wan30 stdio MCP configuration and CLI commands. Nothing here runs a command or generates a video.</p>
+    </header>
+    <section aria-labelledby="requirements-title">
+      <h2 id="requirements-title">Requirements</h2>
+      <ul id="requirements"></ul>
+    </section>
+    <form id="setup-form">
+      <label>
+        Where the Wan30 CLI will run
+        <select id="platform">
+          <option value="">Choose…</option>
+          <option value="macos">macOS</option>
+          <option value="linux">Linux, including WSL</option>
+          <option value="windows">Native Windows</option>
+        </select>
+      </label>
+      <label>
+        Service origin
+        <input id="origin" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" value="https://wan30.video">
+      </label>
+      <p id="origin-message" role="status"></p>
+      <p id="platform-message" role="status"></p>
+    </form>
+    <div id="snippet-root"></div>
+    <section aria-labelledby="docs-title">
+      <h2 id="docs-title">Official pages</h2>
+      <p class="note">These open only when you click them.</p>
+      <ul id="doc-links"></ul>
+    </section>
+    <p id="copy-status" role="status"></p>
+    <footer>
+      <p>Wan30 / NotUsingGithub. No access token is requested, stored, or sent. Text in this page stays in this page.</p>
+    </footer>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
