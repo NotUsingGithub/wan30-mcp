@@ -1,0 +1,12 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Wan30 Video output",
+  "description": "One dataset item with the selected action and the tool result.",
+  "properties": {
+    "results": {
+      "title": "Results",
+      "description": "Dataset items written by this run.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}

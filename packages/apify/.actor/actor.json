@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "wan30-video",
+  "title": "Wan30 Video",
+  "description": "Read a Wan30 account, quote a video, and generate only after a local spend confirmation. Purchased wan30.video credits are required.",
+  "version": "0.1.0",
+  "buildTag": "latest",
+  "minMemoryMbytes": 128,
+  "maxMemoryMbytes": 512,
+  "defaultMemoryMbytes": 256,
+  "input": "./input_schema.json",
+  "output": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
+}
