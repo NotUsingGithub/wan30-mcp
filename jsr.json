@@ -1,0 +1,18 @@
+{
+  "name": "@notusinggithub/wan30",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./jsr/mod.mjs",
+  "publish": {
+    "include": [
+      "jsr/mod.mjs",
+      "jsr/mod.d.ts",
+      "src/client.mjs",
+      "src/mcp.mjs",
+      "src/tools.json",
+      "package.json",
+      "README.md",
+      "LICENSE"
+    ]
+  }
+}
