@@ -60,7 +60,7 @@ Permissions: none are declared, so there is no permission to justify. Do not add
 
 Data use: do not check any data-type collection box. The extension does not collect user data. Complete the certification statements so they stay consistent with `PRIVACY.txt`. Do not certify a data practice this extension does not have.
 
-Privacy policy URL: the User Data FAQ says a product that does not handle user data has no privacy-policy obligation. This repository does not publish a privacy-policy URL. If the current dashboard form will not save without one, host `PRIVACY.txt` yourself and enter that URL. Do not enter a URL that does not serve this disclosure.
+Privacy policy URL: the User Data FAQ says a product that does not handle user data has no privacy-policy obligation. The disclosure is `packages/chrome/PRIVACY.txt` in this public repository. It is not hosted on wan30.video. If the dashboard form will not save without a URL, enter the GitHub blob for that file. Do not enter a URL that does not serve this disclosure. A blob URL is not store acceptance.
 
 ## Screenshots
 

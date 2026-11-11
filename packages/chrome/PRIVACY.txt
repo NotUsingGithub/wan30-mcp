@@ -10,4 +10,4 @@ Links to wan30.video and https://github.com/NotUsingGithub/wan30-mcp open in a n
 
 Public author: Wan30 / NotUsingGithub.
 
-This text is not a published privacy-policy URL. Host it yourself only if the Chrome Web Store dashboard requires a URL.
+This disclosure is this file, packages/chrome/PRIVACY.txt, in the public repository NotUsingGithub/wan30-mcp. It is not a page on wan30.video, and this extension does not deploy a website. If the Chrome Web Store dashboard requires a privacy-policy URL, use the GitHub blob for this file. That URL only identifies this text. It does not mean the store has accepted the extension.
