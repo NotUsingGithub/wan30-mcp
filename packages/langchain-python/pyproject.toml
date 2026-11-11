@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langchain-wan30"
+version = "0.1.0"
+description = "LangChain tools for a wan30.video account. Generation is opt-in and spends purchased credits."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+  { name = "Wan30" },
+  { name = "NotUsingGithub" },
+]
+keywords = ["wan30", "langchain", "ai-video", "mcp"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = [
+  "wan30>=0.1.0,<0.2",
+  "langchain-core>=0.3,<2",
+]
+
+[project.urls]
+Homepage = "https://wan30.video/"
+Documentation = "https://wan30.video/mcp/guide/"
+Repository = "https://github.com/NotUsingGithub/wan30-mcp"
+Issues = "https://github.com/NotUsingGithub/wan30-mcp/issues"
+Pricing = "https://wan30.video/pricing/"
+
+[tool.setuptools.packages.find]
+where = ["src"]
