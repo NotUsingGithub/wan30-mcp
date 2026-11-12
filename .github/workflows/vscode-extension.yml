@@ -1,0 +1,30 @@
+name: VS Code extension
+
+on:
+  pull_request:
+    paths:
+      - "packages/vscode/**"
+      - ".github/workflows/vscode-extension.yml"
+  push:
+    branches:
+      - "cursor/vscode-wan30-extension-0e7d"
+    paths:
+      - "packages/vscode/**"
+      - ".github/workflows/vscode-extension.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/vscode
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npx --yes @vscode/vsce package --no-dependencies
