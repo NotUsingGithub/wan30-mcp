@@ -23,7 +23,7 @@ node packages/apify/package.mjs
 
 `package.mjs` writes `/opt/cursor/artifacts/wan30-video-0.1.0-apify-source.zip` and a sibling `.sha256` file. The archive is the Actor directory, stored uncompressed, and is suitable as an Apify Zip source once it is hosted at an external URL. This repository does not upload it.
 
-The Actor specification schema allows `0.1` and `0.1.0`. This Actor uses `0.1.0` in both `.actor/actor.json` and `package.json`. `buildTag` is `latest`. Memory is 128–512 MB, default 256 MB. The image is `apify/actor-node:22-slim` (Docker Hub tag `22-slim`, about 62 MB). `package.json` pins `apify` 3.7.2. The image's npm 10 ignores `--only=prod` and `--no-optional`, so the Dockerfile uses `--omit=dev --omit=optional`. Each output property includes `"type": "string"`. https://apify.com/schemas/v1/output.json requires that field, and a build stops without it.
+The Actor specification schema allows `0.1` and `0.1.0`. This Actor uses `0.1.0` in both `.actor/actor.json` and `package.json`. `buildTag` is `latest`. Memory is 128–512 MB, default 256 MB. The image is `apify/actor-node:22-slim` (Docker Hub tag `22-slim`, about 62 MB). `package.json` pins `apify` 3.7.2. The image's npm 10 ignores `--only=prod` and `--no-optional`, so the Dockerfile uses `npm ci --omit=dev --omit=optional` with `package-lock.json`. `apify` stays at 3.7.2. Overrides pin the transitive packages the production audit flagged: `minimatch` 11.0.8 and `basic-ftp` 6.2.6. There are no devDependencies. `source-map` 0.6.1 is optional and is omitted from the image. Each output property includes `"type": "string"`. https://apify.com/schemas/v1/output.json requires that field, and a build stops without it.
 
 ## Publication
 
@@ -41,7 +41,7 @@ These steps are still required before a public listing, and none of them is done
 
 1. Create a free Apify account and open Development > My Actors.
 2. Create an Actor whose source is the Git URL above, or a Zip file URL for this Actor directory.
-3. Build it and run it once. Both consume platform usage.
+3. Build it and run it once. Both consume platform usage. The run still needs the secret `token`. This Actor has no no-token mode and does not invent a successful self-test. Use `action` `models` or `account`, and leave `confirmSpend` false. Those actions call `list_models` or `account_status`, which are read-only tools with no tool arguments. The request still sends the bearer token to `https://wan30.video`. It does not call `generate_video`.
 4. On the Publishing tab, add a logo and description, complete Monetization, add a sample output, and keep the output schema. Choose Limited permissions. This Actor reads its input and writes its default dataset. It does not need full account access. Identity verification is required for full permissions, for more than 10 published Actors, or to receive payouts. It is not required to publish this one limited-permission Actor.
 5. Accept the Store Publishing Terms (https://docs.apify.com/legal/store-publishing-terms-and-conditions), then select Publish on Store.
 

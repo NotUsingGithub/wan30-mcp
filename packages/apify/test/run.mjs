@@ -447,7 +447,12 @@ check(outputSchemaErrors(missingType, outputMeta).includes('results missing type
 check(pkg.dependencies.apify === '3.7.2', 'pinned apify sdk');
 const dockerfile = readFileSync(resolve(root, 'Dockerfile'), 'utf8');
 check(dockerfile.includes('apify/actor-node:22-slim'), 'node 22 slim image');
-check(dockerfile.includes('npm install --omit=dev --omit=optional'), 'npm 10 install flags');
+check(dockerfile.includes('npm ci --omit=dev --omit=optional'), 'npm ci production flags');
+const lock = JSON.parse(readFileSync(resolve(root, 'package-lock.json'), 'utf8'));
+const locked = (name) => lock.packages[`node_modules/${name}`].version;
+check(lock.lockfileVersion === 3 && locked('apify') === '3.7.2', 'lock pins apify 3.7.2');
+check(locked('minimatch') === '11.0.8' && locked('basic-ftp') === '6.2.6', 'lock pins patched transitive versions');
+check(pkg.overrides.minimatch === '11.0.8' && pkg.overrides['basic-ftp'] === '6.2.6', 'overrides match the lock');
 check(!dockerfile.includes('--only=prod'), 'deprecated npm production flag is absent');
 const readme = readFileSync(resolve(root, 'README.md'), 'utf8');
 check(readme.includes('https://github.com/NotUsingGithub/wan27-apify-actor'), 'wan27 actor reference');

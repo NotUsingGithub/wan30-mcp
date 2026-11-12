@@ -13,6 +13,7 @@ const files = [
   'Dockerfile',
   'LICENSE',
   'README.md',
+  'package-lock.json',
   'package.json',
   'package.mjs',
   'src/main.js',

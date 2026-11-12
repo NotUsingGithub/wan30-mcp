@@ -16,5 +16,9 @@
   },
   "dependencies": {
     "apify": "3.7.2"
+  },
+  "overrides": {
+    "basic-ftp": "6.2.6",
+    "minimatch": "11.0.8"
   }
 }
