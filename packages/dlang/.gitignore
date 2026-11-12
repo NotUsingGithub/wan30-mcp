@@ -1,0 +1,7 @@
+.dub/
+*.o
+*.a
+wan30-test-library
+__dummy.html
+docs.json
+__main.d

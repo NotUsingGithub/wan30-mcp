@@ -1,0 +1,12 @@
+{
+	"name": "wan30",
+	"description": "D client for a wan30.video account. Purchased credits are required for generation.",
+	"authors": ["Wan30", "NotUsingGithub"],
+	"copyright": "Copyright (c) 2026 wan30.video",
+	"license": "MIT",
+	"homepage": "https://wan30.video/",
+	"targetType": "library",
+	"sourcePaths": ["source"],
+	"importPaths": ["source"],
+	"dependencies": {}
+}
