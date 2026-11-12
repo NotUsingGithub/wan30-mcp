@@ -412,6 +412,38 @@ check(manifest.version === '0.1.0' && pkg.version === '0.1.0', 'version 0.1.0');
 check(inputSchema.properties.token.isSecret === true, 'secret token');
 check(inputSchema.properties.confirmSpend.default === false, 'confirm defaults off');
 check(outputSchema.properties.results.template === '{{links.apiDefaultDatasetUrl}}/items', 'dataset output');
+const outputMeta = JSON.parse(readFileSync(resolve(root, 'test/apify-output.schema.json'), 'utf8'));
+check(outputMeta.$id === 'https://apify.com/schemas/v1/output.json', 'official output schema id');
+function outputSchemaErrors(document, meta) {
+  const errors = [];
+  for (const key of meta.required) {
+    if (document[key] === undefined) errors.push(`missing ${key}`);
+  }
+  const versionRule = meta.properties.actorOutputSchemaVersion;
+  if (!Number.isInteger(document.actorOutputSchemaVersion)
+    || document.actorOutputSchemaVersion < versionRule.minimum
+    || document.actorOutputSchemaVersion > versionRule.maximum) {
+    errors.push('bad version');
+  }
+  const rule = meta.properties.properties.patternProperties['^'];
+  const allowed = new Set(Object.keys(rule.properties));
+  for (const [name, property] of Object.entries(document.properties ?? {})) {
+    for (const key of rule.required) {
+      if (property?.[key] === undefined) errors.push(`${name} missing ${key}`);
+    }
+    if (property?.type !== rule.properties.type.const) errors.push(`${name} type`);
+    if (rule.additionalProperties === false) {
+      for (const key of Object.keys(property ?? {})) {
+        if (!allowed.has(key)) errors.push(`${name} extra ${key}`);
+      }
+    }
+  }
+  return errors;
+}
+check(outputSchemaErrors(outputSchema, outputMeta).length === 0, 'output matches platform schema');
+const missingType = structuredClone(outputSchema);
+delete missingType.properties.results.type;
+check(outputSchemaErrors(missingType, outputMeta).includes('results missing type'), 'schema catches missing output type');
 check(pkg.dependencies.apify === '3.7.2', 'pinned apify sdk');
 const dockerfile = readFileSync(resolve(root, 'Dockerfile'), 'utf8');
 check(dockerfile.includes('apify/actor-node:22-slim'), 'node 22 slim image');

@@ -16,6 +16,7 @@ const files = [
   'package.json',
   'package.mjs',
   'src/main.js',
+  'test/apify-output.schema.json',
   'test/run.mjs',
 ];
 

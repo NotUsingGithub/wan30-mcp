@@ -23,7 +23,7 @@ node packages/apify/package.mjs
 
 `package.mjs` writes `/opt/cursor/artifacts/wan30-video-0.1.0-apify-source.zip` and a sibling `.sha256` file. The archive is the Actor directory, stored uncompressed, and is suitable as an Apify Zip source once it is hosted at an external URL. This repository does not upload it.
 
-The Actor specification schema allows `0.1` and `0.1.0`. This Actor uses `0.1.0` in both `.actor/actor.json` and `package.json`. `buildTag` is `latest`. Memory is 128–512 MB, default 256 MB. The image is `apify/actor-node:22-slim` (Docker Hub tag `22-slim`, about 62 MB). `package.json` pins `apify` 3.7.2. The image's npm 10 ignores `--only=prod` and `--no-optional`, so the Dockerfile uses `--omit=dev --omit=optional`.
+The Actor specification schema allows `0.1` and `0.1.0`. This Actor uses `0.1.0` in both `.actor/actor.json` and `package.json`. `buildTag` is `latest`. Memory is 128–512 MB, default 256 MB. The image is `apify/actor-node:22-slim` (Docker Hub tag `22-slim`, about 62 MB). `package.json` pins `apify` 3.7.2. The image's npm 10 ignores `--only=prod` and `--no-optional`, so the Dockerfile uses `--omit=dev --omit=optional`. Each output property includes `"type": "string"`. https://apify.com/schemas/v1/output.json requires that field, and a build stops without it.
 
 ## Publication
 
