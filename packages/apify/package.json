@@ -1,0 +1,24 @@
+{
+  "name": "wan30-video",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wan30 video Actor. Generation spends purchased wan30.video credits.",
+  "author": "Wan30",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node test/run.mjs"
+  },
+  "dependencies": {
+    "apify": "3.7.2"
+  },
+  "overrides": {
+    "basic-ftp": "6.2.6",
+    "minimatch": "11.0.8"
+  }
+}

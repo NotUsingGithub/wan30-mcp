@@ -1,0 +1,53 @@
+{
+  "actorSpecification": 1,
+  "title": "Wan30 Video results",
+  "description": "Each item is one Actor action. data is the Wan30 tool result and is not rewritten.",
+  "fields": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["action", "data"],
+    "properties": {
+      "action": {
+        "type": "string",
+        "title": "Action",
+        "description": "The action that produced this item.",
+        "enum": ["account", "models", "model", "estimate", "generate", "tasks", "task"],
+        "example": "account"
+      },
+      "data": {
+        "title": "Tool result",
+        "description": "structuredContent.data from the Wan30 tool, unchanged. The service chooses the shape.",
+        "example": {}
+      },
+      "requestId": {
+        "type": "string",
+        "title": "Request ID",
+        "description": "Present for generate. Reuse this value to retry the same request.",
+        "example": "0123456789abcdef"
+      },
+      "disconnect": {
+        "type": "string",
+        "title": "Disconnect",
+        "description": "Present only when session revocation could not be confirmed.",
+        "enum": ["REVOCATION_UNCONFIRMED"]
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": ["action", "requestId", "disconnect", "data"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "action": { "label": "Action", "format": "text" },
+          "requestId": { "label": "Request ID", "format": "text" },
+          "disconnect": { "label": "Disconnect", "format": "text" },
+          "data": { "label": "Tool result", "format": "object" }
+        }
+      }
+    }
+  }
+}

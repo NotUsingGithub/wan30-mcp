@@ -1,0 +1,114 @@
+{
+  "title": "Wan30 Video",
+  "description": "Purchased wan30.video credits are required. Sign-up, check-in, and gift credits alone do not qualify. This is not an official Alibaba, DashScope, or Tongyi client. Generation stays off until confirmSpend is true, and that flag is not sent to the service.",
+  "type": "object",
+  "schemaVersion": 1,
+  "additionalProperties": false,
+  "required": ["token", "action"],
+  "properties": {
+    "token": {
+      "title": "Access token",
+      "type": "string",
+      "description": "Wan30 access token. Stored as a secret input. The Actor does not print it, write it to the dataset, or put it in a URL.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "origin": {
+      "title": "Service origin",
+      "type": "string",
+      "description": "Exact HTTPS origin. The default is https://wan30.video.",
+      "editor": "textfield",
+      "default": "https://wan30.video"
+    },
+    "action": {
+      "title": "Action",
+      "type": "string",
+      "description": "account, models, and model read the account. estimate quotes one input. generate spends credits only when confirmSpend is true and the quote succeeds. tasks and task read existing tasks.",
+      "editor": "select",
+      "enum": ["account", "models", "model", "estimate", "generate", "tasks", "task"],
+      "enumTitles": [
+        "Show account status",
+        "List models",
+        "Show model input",
+        "Estimate video",
+        "Generate video",
+        "Show recent tasks",
+        "Read a task"
+      ]
+    },
+    "modelId": {
+      "title": "Model",
+      "type": "string",
+      "description": "Required for model, estimate, and generate.",
+      "editor": "select",
+      "enum": ["wan30-text-to-video", "wan30-image-to-video", "wan30-reference-to-video"]
+    },
+    "prompt": {
+      "title": "Prompt",
+      "type": "string",
+      "description": "1 to 1500 characters. Required for estimate and generate.",
+      "editor": "textarea"
+    },
+    "imageUrls": {
+      "title": "Image URLs",
+      "type": "array",
+      "description": "HTTPS URLs you already have. One URL for image-to-video, or 1 to 10 for reference-to-video. Omit for text-to-video.",
+      "editor": "stringList"
+    },
+    "durationSeconds": {
+      "title": "Duration seconds",
+      "type": "integer",
+      "description": "Optional integer from 2 to 30. Leave empty to omit it.",
+      "editor": "number",
+      "minimum": 2,
+      "maximum": 30
+    },
+    "resolution": {
+      "title": "Resolution",
+      "type": "string",
+      "description": "Optional. Leave empty to omit it.",
+      "editor": "select",
+      "enum": ["480p", "720p", "1080p"]
+    },
+    "aspectRatio": {
+      "title": "Aspect ratio",
+      "type": "string",
+      "description": "Optional. Leave empty to omit it.",
+      "editor": "select",
+      "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"]
+    },
+    "hasAudio": {
+      "title": "Audio",
+      "type": "boolean",
+      "description": "Optional. Leave unset to omit it.",
+      "editor": "checkbox"
+    },
+    "confirmSpend": {
+      "title": "Confirm spend",
+      "type": "boolean",
+      "description": "Local switch. Generation runs only when this is true and the estimate succeeds. The value is not sent to wan30.video.",
+      "editor": "checkbox",
+      "default": false
+    },
+    "requestId": {
+      "title": "Request ID",
+      "type": "string",
+      "description": "Optional. 16 to 128 letters, numbers, underscores, or hyphens. Reuse it to retry the same generation.",
+      "editor": "textfield"
+    },
+    "taskId": {
+      "title": "Task ID",
+      "type": "string",
+      "description": "Required for Read a task.",
+      "editor": "textfield"
+    },
+    "limit": {
+      "title": "Task limit",
+      "type": "integer",
+      "description": "Optional integer from 1 to 50 for Show recent tasks. Leave empty to omit it.",
+      "editor": "number",
+      "minimum": 1,
+      "maximum": 50
+    }
+  }
+}
