@@ -36,7 +36,10 @@ jobs then do not run.
    `langchain-wan30`.
 
 Only the two publish jobs request `id-token: write`, and each job's
-permissions block is only that. They use the GitHub environment named `pypi`.
+permissions block is only that. `publish wan30` uses the GitHub environment
+`pypi`. `publish langchain-wan30` uses `pypi-langchain`. PyPI identifies a
+pending GitHub publisher by owner, repository, workflow filename, and
+environment, so those two jobs cannot share one environment.
 The workflow token is otherwise limited to `contents: read`. Actions are pinned
 to commit SHAs: `actions/checkout` v7.0.1, `actions/setup-python` v7.1.0,
 `actions/upload-artifact` v7.0.2, `actions/download-artifact` v8.0.2, and
@@ -63,16 +66,19 @@ one GitHub publisher for each project:
 | PyPI project name | Owner | Repository name | Workflow name | Environment name |
 | --- | --- | --- | --- | --- |
 | `wan30` | `NotUsingGithub` | `wan30-mcp` | `publish-python.yml` | `pypi` |
-| `langchain-wan30` | `NotUsingGithub` | `wan30-mcp` | `publish-python.yml` | `pypi` |
+| `langchain-wan30` | `NotUsingGithub` | `wan30-mcp` | `publish-python.yml` | `pypi-langchain` |
 
-The workflow filename and environment name must match exactly. Add `wan30`
-before `langchain-wan30`. The workflow already uploads in that order.
+The workflow filename and environment name must match exactly. The `wan30`
+pending publisher with environment `pypi` is already registered. Leave it in
+place. Register only the second row. Repeating environment `pypi` for
+`langchain-wan30` is rejected, because a pending publisher is unique on those
+four fields.
 
 ## GitHub environment
 
-Create the environment before the first dispatch. Open
+Create both environments before the first dispatch. Open
 <https://github.com/NotUsingGithub/wan30-mcp/settings/environments>, choose
-**New environment**, and name it `pypi`.
+**New environment**, and name one `pypi` and the other `pypi-langchain`.
 
 Leave the environment without secrets. This repository change does not add
 required reviewers, deployment branches, or organization permissions. A

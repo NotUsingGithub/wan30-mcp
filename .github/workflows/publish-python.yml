@@ -143,6 +143,19 @@ jobs:
           name: wan30-dist
           path: dist
 
+      - name: Keep only wan30 distributions
+        shell: bash
+        run: |
+          set -euo pipefail
+          find dist -maxdepth 1 -type f ! -name 'wan30-*' -delete
+          echo "wan30 files to publish:"
+          find dist -maxdepth 1 -type f -print
+          test -n "$(find dist -maxdepth 1 -type f -name 'wan30-*' -print -quit)"
+          if find dist -maxdepth 1 -type f -name '*langchain*' -print -quit | grep -q .; then
+            echo "Refusing to publish langchain files from the wan30 job" >&2
+            exit 1
+          fi
+
       - name: Publish wan30 to PyPI
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
         with:
@@ -156,8 +169,10 @@ jobs:
     needs: publish-wan30
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Distinct from the wan30 job. PyPI pending publishers are unique on
+    # owner, repository, workflow filename, and environment.
     environment:
-      name: pypi
+      name: pypi-langchain
       url: https://pypi.org/p/langchain-wan30
     permissions:
       id-token: write
@@ -167,6 +182,19 @@ jobs:
         with:
           name: langchain-wan30-dist
           path: dist
+
+      - name: Keep only langchain-wan30 distributions
+        shell: bash
+        run: |
+          set -euo pipefail
+          find dist -maxdepth 1 -type f ! \( -name 'langchain-wan30-*' -o -name 'langchain_wan30-*' \) -delete
+          echo "langchain-wan30 files to publish:"
+          find dist -maxdepth 1 -type f -print
+          test -n "$(find dist -maxdepth 1 -type f \( -name 'langchain-wan30-*' -o -name 'langchain_wan30-*' \) -print -quit)"
+          if find dist -maxdepth 1 -type f -name 'wan30-*' -print -quit | grep -q .; then
+            echo "Refusing to publish wan30 files from the langchain-wan30 job" >&2
+            exit 1
+          fi
 
       - name: Publish langchain-wan30 to PyPI
         uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
