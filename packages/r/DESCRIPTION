@@ -1,0 +1,25 @@
+Package: wan30
+Type: Package
+Title: Client for a 'Wan30' Video Account
+Version: 0.1.0
+Authors@R: c(
+    person("Wan30", role = "aut"),
+    person("NotUsingGithub", role = c("aut", "cre"),
+           email = "66665951+NotUsingGithub@users.noreply.github.com",
+           comment = "https://github.com/NotUsingGithub"))
+Description: Client for a wan30.video account. It speaks the same Streamable
+    HTTP MCP endpoint as the Wan30 command line client: POST {origin}/api/mcp/.
+    Purchased wan30.video credits are required for generation. Sign-up,
+    check-in and gift credits alone do not qualify. Estimation does not spend
+    credits. Generation does not call the service unless confirm_spend is
+    TRUE, and that flag is not sent. This is not an official Alibaba,
+    DashScope, or Tongyi client.
+License: MIT + file LICENSE
+URL: https://wan30.video/, https://wan30.video/mcp/,
+    https://wan30.video/mcp/guide/, https://wan30.video/cli/,
+    https://github.com/NotUsingGithub/wan30-mcp
+BugReports: https://github.com/NotUsingGithub/wan30-mcp/issues
+Encoding: UTF-8
+Depends: R (>= 4.0)
+Imports: curl, jsonlite
+NeedsCompilation: no
