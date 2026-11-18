@@ -1,0 +1,2 @@
+# wan30 is not on PyPI yet. Install the reviewed 0.1.x wheel before this line succeeds.
+wan30>=0.1.0,<0.2
