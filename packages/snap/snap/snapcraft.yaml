@@ -1,0 +1,39 @@
+name: wan30
+base: core24
+version: "0.1.0"
+summary: Client for a wan30.video account
+description: |
+  Command line client for a wan30.video account. It speaks the same
+  Streamable HTTP MCP endpoint as the Wan30 command line client:
+  POST {origin}/api/mcp/.
+  Purchased wan30.video credits are required for generation. Sign-up,
+  check-in and gift credits alone do not qualify. estimate does not
+  spend credits. generate does not call the service unless
+  --confirm-spend is present, and that flag is not sent.
+  This is not an official Alibaba, DashScope, or Tongyi client.
+grade: stable
+confinement: strict
+license: MIT
+title: Client for a Wan30 video account
+website: https://wan30.video/
+source-code: https://github.com/NotUsingGithub/wan30-mcp
+issues: https://github.com/NotUsingGithub/wan30-mcp/issues
+contact: https://github.com/NotUsingGithub/wan30-mcp/issues
+
+apps:
+  wan30:
+    command: bin/wan30
+    plugs:
+      - network
+      - home
+
+parts:
+  wan30:
+    plugin: go
+    source: .
+    build-snaps:
+      - go/latest/stable
+    override-build: |
+      set -eu
+      mkdir -p "$CRAFT_PART_INSTALL/bin"
+      CGO_ENABLED=0 go build -ldflags="-s -w" -o "$CRAFT_PART_INSTALL/bin/wan30" .
